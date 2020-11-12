@@ -3,7 +3,7 @@ package com.vadimvolkov.photogram
 import android.content.Intent
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_profile.*
 
 abstract class MainActivity(val navNumber: Int) : AppCompatActivity() {
 
