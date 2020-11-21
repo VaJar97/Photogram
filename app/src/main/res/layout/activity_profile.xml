@@ -5,52 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
+    tools:context=".activities.HomeActivity"
     android:background="@color/white">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/whiteish"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent">
+        style="@style/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="user.name"
-                android:textColor="@color/black"
-                android:textSize="19sp"
+                style="@style/toolbar_text"
+                android:text="vadim.volkov"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="15dp"
+                style="@style/toolbar_image"
                 android:src="@drawable/ic_more"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_above="@id/bottom_navigation_view"
-
-        android:background="@drawable/shadow"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
@@ -62,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toStartOf="@+id/edit_button"
-        android:src="@drawable/driver"
+        android:src="@drawable/profile"
         app:layout_constraintHorizontal_weight="2"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -139,17 +122,6 @@
         app:layout_constraintHorizontal_weight="5"
         android:layout_marginEnd="15dp"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:labelVisibilityMode="unlabeled"
-        app:itemBackground="@color/whiteish"
-        app:itemIconTint="@drawable/bottom_nav_selector"
-        app:itemIconSize="24dp"
-        app:menu="@menu/bottom_navigation_menu" />
+    <include layout="@layout/bottom_navigation_view"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Photogram</string>
+    <string name="signUp_request">Do not have an account? <b>Sign Up.</b></string>
 </resources>

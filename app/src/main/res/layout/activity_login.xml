@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:id="@+id/scroll_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.LoginActivity">
+
+        <ImageView
+            android:id="@+id/photogram_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/photogram_label"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+            android:id="@+id/login_email"
+            style="@style/edit_text_login"
+            android:layout_marginTop="100dp"
+            app:layout_constraintTop_toBottomOf="@+id/photogram_image"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            />
+
+        <EditText
+            android:id="@+id/login_password"
+            style="@style/edit_text_login"
+            app:layout_constraintTop_toBottomOf="@+id/login_email"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_button_background"
+            android:text="Sign In"
+            android:textColor="@drawable/login_text_color"
+            android:stateListAnimator="@animator/login_button_anim"
+            app:layout_constraintTop_toBottomOf="@+id/login_password"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/text_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:text="@string/signUp_request"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_above="@id/text_signUp"
+            android:background="@drawable/shadow"
+            app:layout_constraintBottom_toTopOf="@+id/text_signUp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
