@@ -1,6 +1,5 @@
 package com.vadimvolkov.photogram.activities
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +23,7 @@ import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.views.PasswordDialog
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import java.io.File
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,8 +38,8 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
     private lateinit var mStorageRef: StorageReference
 
     private lateinit var photoUri: Uri
+    private lateinit var mURL: String
     private val REQUEST_IMAGE_CAPTURE = 1
-    private lateinit var currentPhotoPath: String
     val simpleDateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +75,6 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
 
     private fun takeCameraPicture() {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            try {
                 if (takePictureIntent.resolveActivity(packageManager) != null) {
                     val photoFile = createPhotoFile()
                     photoUri = FileProvider.getUriForFile(
@@ -86,10 +85,6 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,14 +94,21 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
             mStorageRef.child("users/${mAuth.currentUser!!.uid}/photo").putFile(photoUri)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        mDatabaseRef.child("users/${mAuth.currentUser!!.uid}/photo")
-                            .setValue(mStorageRef.downloadUrl.toString())
+                        mStorageRef.child("users/${mAuth.currentUser!!.uid}/photo").downloadUrl
                             .addOnCompleteListener{
                                 if (it.isSuccessful) {
-                                    Log.d(TAG, "onActivityResult: Photo saved successfully")
-                                } else {
-                                    Toast.makeText(this, it.exception!!.message!!, Toast.LENGTH_SHORT)
-                                        .show()
+                                    mURL = it.result.toString()
+
+                                    mDatabaseRef.child("users/${mAuth.currentUser!!.uid}/photo")
+                                        .setValue(mURL)
+                                        .addOnCompleteListener{
+                                            if (it.isSuccessful) {
+                                                Log.d(TAG, "onActivityResult: Photo saved successfully")
+                                            } else {
+                                                Toast.makeText(this, it.exception!!.message!!, Toast.LENGTH_SHORT)
+                                                    .show()
+                                            }
+                                        }
                                 }
                             }
                     } else {
