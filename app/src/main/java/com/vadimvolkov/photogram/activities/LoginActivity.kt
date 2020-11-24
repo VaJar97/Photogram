@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 
-class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, TextWatcher,
+class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener,
     View.OnClickListener {
 
     private val TAG = "LoginActivity"
@@ -28,9 +28,7 @@ class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, Text
 
         KeyboardVisibilityEvent.setEventListener(this, this)
 
-        login_button.isEnabled = false
-        login_email.addTextChangedListener(this)
-        login_password.addTextChangedListener(this)
+        coordinateBtnAndInputs(login_button, login_email, login_password)
 
         login_button.setOnClickListener(this)
         text_signUp.setOnClickListener(this)
@@ -46,16 +44,6 @@ class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener, Text
             scroll_login.scrollTo(0,scroll_login.top)
             text_signUp.visibility = View.VISIBLE
         }
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-        login_button.isEnabled = validate (login_email.text.toString(), login_password.text.toString())
     }
 
     override fun onClick(v: View) {

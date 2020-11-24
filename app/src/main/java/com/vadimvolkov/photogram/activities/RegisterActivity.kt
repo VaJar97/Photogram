@@ -10,16 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_email.next_button
 import kotlinx.android.synthetic.main.fragment_register_namepass.*
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 
-class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFragment.Listener {
+class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
+        NamePassFragment.Listener, KeyboardVisibilityEventListener {
 
     private val TAG = "RegisterActivity"
     
@@ -41,14 +46,15 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
             supportFragmentManager.beginTransaction().add(R.id.frame_layout, EmailFragment())
                 .commit()
         }
+
+        KeyboardVisibilityEvent.setEventListener(this, this)
     }
 
     override fun onNext(email: String) {
         if (email.isNotEmpty()) {
             mEmail = email
-            mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    if (it.result?.signInMethods?.isEmpty() != false) {
+            mAuth.fetchSignInMethodsForEmail(email) {signInMethods ->
+                    if (signInMethods.isEmpty())  {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.frame_layout, NamePassFragment())
                             .addToBackStack(null)
@@ -57,10 +63,6 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
                         Toast.makeText(this, "This email already exist", Toast.LENGTH_SHORT)
                             .show()
                     }
-                } else {
-                    Toast.makeText(this, it.exception!!.message!!, Toast.LENGTH_SHORT)
-                        .show()
-                }
             }
         } else {
             Toast.makeText(this, "Please, enter email", Toast.LENGTH_SHORT)
@@ -73,28 +75,14 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
             mName = fullName
             mPassword = password
             if (mEmail != null) {
-                println("mail = $mEmail, password = $mPassword")
-                mAuth.createUserWithEmailAndPassword(mEmail!!, mPassword!!).addOnCompleteListener{
-                    if (it.isSuccessful) {
-                        val user = makeUser(fullName, mEmail!!)
-                        mRef.child("users").child(it.result!!.user!!.uid).setValue(user).addOnCompleteListener{
-                            if (it.isSuccessful) {
-                                startHomeActivity()
-                            } else {
-                                Log.e(TAG, "onRegister: Error with create user profile", )
-                                Toast.makeText(this, "Trouble with registration", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
+                mAuth.createUserWithEmailAndPassword(mEmail!!, mPassword!!) {
+                    val user = makeUser(fullName, mEmail!!)
+                    mRef.createUser(it.user!!.uid, user) {
+                        startHomeActivity()
                         }
-                    } else {
-                        Log.e(TAG, "onRegister: Error with create user", )
-                        Toast.makeText(this, "Trouble with sign in/ registration", Toast.LENGTH_SHORT)
-                            .show()
-                    }
                 }
             } else {
-                Log.e(TAG, "onRegister: Email or Password is null")
-                Toast.makeText(this,"Please enter data",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please, back and enter email",Toast.LENGTH_SHORT).show()
                 supportFragmentManager.popBackStack()
             }
         } else {
@@ -115,6 +103,50 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener, NamePassFr
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
+
+    override fun onVisibilityChanged(isOpen: Boolean) {
+        if (isOpen) {
+            scroll_register.scrollTo(0,scroll_register.bottom)
+        } else {
+            scroll_register.scrollTo(0,scroll_register.top)
+        }
+    }
+
+    private fun DatabaseReference.createUser(uid: String, user: User, onSuccess: () -> Unit) {
+        child("users").child(uid).setValue(user).addOnCompleteListener{
+            if (it.isSuccessful) {
+                onSuccess()
+            } else {
+                Log.e(TAG, "onRegister: Error with create user profile", )
+                Toast.makeText(this@RegisterActivity, "Trouble with registration", Toast.LENGTH_SHORT)
+                        .show()
+            }
+        }
+    }
+
+    private fun FirebaseAuth.createUserWithEmailAndPassword(email: String, password: String,
+                                                            onSuccess: (AuthResult) -> Unit) {
+        createUserWithEmailAndPassword(email, password).addOnCompleteListener{
+            if (it.isSuccessful) {
+                onSuccess(it.result!!)
+            } else {
+                Log.e(TAG, "onRegister: Error with create user", )
+                Toast.makeText(this@RegisterActivity, "Trouble with sign in/ registration", Toast.LENGTH_SHORT)
+                        .show()
+            }
+        }
+    }
+
+    private fun FirebaseAuth.fetchSignInMethodsForEmail(email: String, onSuccess: (List<String>) -> Unit) {
+        fetchSignInMethodsForEmail(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.signInMethods?.let { it1 -> onSuccess(it1) }
+            } else {
+                Toast.makeText(this@RegisterActivity, it.exception!!.message!!, Toast.LENGTH_SHORT)
+                        .show()
+            }
+        }
+    }
 }
 
 class EmailFragment : Fragment() {
@@ -134,6 +166,7 @@ class EmailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        coordinateBtnAndInputs(next_button, register_email)
         next_button.setOnClickListener{
             val email = register_email.text.toString()
             mContext.onNext(email)
@@ -163,6 +196,7 @@ class NamePassFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        coordinateBtnAndInputs(button_finish, register_name, register_password)
         button_finish.setOnClickListener{
             val name = register_name.text.toString()
             val password = register_password.text.toString()
