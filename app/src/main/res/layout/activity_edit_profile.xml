@@ -50,9 +50,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image_edit"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/profile"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/person"
             app:civ_border_color="@android:color/darker_gray"
             app:civ_border_width="3dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
+import com.vadimvolkov.photogram.utils.coordinateBtnAndInputs
+import com.vadimvolkov.photogram.utils.showToast
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_email.next_button
@@ -28,9 +30,9 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
 
     private val TAG = "RegisterActivity"
     
-    private var mName : String? = null
-    private var mPassword : String? = null
-    private var mEmail : String? = null
+    private var tempName : String? = null
+    private var tempPassword : String? = null
+    private var tempEmail : String? = null
 
     private lateinit var mAuth : FirebaseAuth
     private lateinit var mRef : DatabaseReference
@@ -52,7 +54,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
 
     override fun onNext(email: String) {
         if (email.isNotEmpty()) {
-            mEmail = email
+            tempEmail = email
             mAuth.fetchSignInMethodsForEmail(email) {signInMethods ->
                     if (signInMethods.isEmpty())  {
                         supportFragmentManager.beginTransaction()
@@ -60,40 +62,37 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
                             .addToBackStack(null)
                             .commit()
                     } else {
-                        Toast.makeText(this, "This email already exist", Toast.LENGTH_SHORT)
-                            .show()
+                        showToast("This email already exist")
                     }
             }
         } else {
-            Toast.makeText(this, "Please, enter email", Toast.LENGTH_SHORT)
-                .show()
+            showToast("Please, enter email")
         }
     }
 
     override fun onRegister(fullName: String, password: String) {
         if (fullName.isNotEmpty() && password.isNotEmpty()) {
-            mName = fullName
-            mPassword = password
-            if (mEmail != null) {
-                mAuth.createUserWithEmailAndPassword(mEmail!!, mPassword!!) {
-                    val user = makeUser(fullName, mEmail!!)
+            tempName = fullName
+            tempPassword = password
+            if (tempEmail != null) {
+                mAuth.createUserWithEmailAndPassword(tempEmail!!, tempPassword!!) {
+                    val user = makeUser(fullName, tempEmail!!)
                     mRef.createUser(it.user!!.uid, user) {
                         startHomeActivity()
                         }
                 }
             } else {
-                Toast.makeText(this,"Please, back and enter email",Toast.LENGTH_SHORT).show()
+                showToast("Please, back and enter email")
                 supportFragmentManager.popBackStack()
             }
         } else {
-            Toast.makeText(this, "Please, enter name and password", Toast.LENGTH_SHORT)
-                .show()
+            showToast("Please, enter name and password")
         }
     }
 
     private fun makeUser(fullName: String, email : String) : User {
         val username = mUsername(fullName)
-        return User(name = fullName, username = username, email = mEmail!!)
+        return User(name = fullName, username = username, email = email)
     }
 
     private fun mUsername(fullName: String) =
@@ -117,9 +116,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
             if (it.isSuccessful) {
                 onSuccess()
             } else {
-                Log.e(TAG, "onRegister: Error with create user profile", )
-                Toast.makeText(this@RegisterActivity, "Trouble with registration", Toast.LENGTH_SHORT)
-                        .show()
+                showToast("Trouble with registration")
             }
         }
     }
@@ -130,9 +127,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
             if (it.isSuccessful) {
                 onSuccess(it.result!!)
             } else {
-                Log.e(TAG, "onRegister: Error with create user", )
-                Toast.makeText(this@RegisterActivity, "Trouble with sign in/ registration", Toast.LENGTH_SHORT)
-                        .show()
+                showToast("Trouble with sign in/ registration")
             }
         }
     }
@@ -142,8 +137,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
             if (it.isSuccessful) {
                 it.result?.signInMethods?.let { it1 -> onSuccess(it1) }
             } else {
-                Toast.makeText(this@RegisterActivity, it.exception!!.message!!, Toast.LENGTH_SHORT)
-                        .show()
+                showToast(it.exception!!.message!!)
             }
         }
     }
