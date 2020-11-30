@@ -12,9 +12,9 @@ import com.google.firebase.storage.FirebaseStorage
 
 class FirebaseHelper (var activity: Activity) {
 
-    private val mDatabaseRef = FirebaseDatabase.getInstance().reference
-    private val mStorageRef = FirebaseStorage.getInstance().reference
-    private val mAuth = FirebaseAuth.getInstance()
+    val mDatabaseRef = FirebaseDatabase.getInstance().reference
+    val mStorageRef = FirebaseStorage.getInstance().reference
+    val mAuth = FirebaseAuth.getInstance()
 
     fun currentUserReference() = mDatabaseRef.child("users").child(mAuth.currentUser!!.uid)
 

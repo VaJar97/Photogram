@@ -59,6 +59,6 @@ fun Editable.toStringOrNull(): String? {
     return if (str.isEmpty()) null else str
 }
 
-fun Activity.showToast(text : String, duration: Int = Toast.LENGTH_SHORT) {
+fun Activity.showToast(text : String, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, text, duration).show()
 }
