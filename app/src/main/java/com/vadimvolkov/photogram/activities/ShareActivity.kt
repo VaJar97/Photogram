@@ -7,17 +7,24 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.CameraHelper
 import com.vadimvolkov.photogram.utils.FirebaseHelper
+import com.vadimvolkov.photogram.utils.ValueEventListenerAdapter
 import com.vadimvolkov.photogram.utils.showToast
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_share.*
+import org.w3c.dom.Comment
+import java.util.*
 
 class ShareActivity : MainActivity(2) {
 
     private lateinit var mCameraHelper: CameraHelper
     private lateinit var firebaseHelper: FirebaseHelper
+    private lateinit var mUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +37,10 @@ class ShareActivity : MainActivity(2) {
         toolbar_text_share.setOnClickListener { sharePhoto() }
 
         firebaseHelper = FirebaseHelper(this)
+
+        firebaseHelper.currentUserReference().addValueEventListener(ValueEventListenerAdapter{
+            mUser = it.getValue(User::class.java)!!
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,25 +57,37 @@ class ShareActivity : MainActivity(2) {
 
     private fun sharePhoto() {
         if (mCameraHelper.photoUri != null) {
+            val uid = firebaseHelper.mAuth.currentUser!!.uid
+            val photoUri = mCameraHelper.photoUri!!
             firebaseHelper.mStorageRef
                     .child("users")
-                    .child(firebaseHelper.mAuth.currentUser!!.uid)
+                    .child(uid)
                     .child("photo")
-                    .child(mCameraHelper.photoUri!!.lastPathSegment!!)
-                    .putFile(mCameraHelper.photoUri!!)
+                    .child(photoUri.lastPathSegment!!)
+                    .putFile(photoUri)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 it.result!!.storage.downloadUrl.addOnCompleteListener {
                                     val url = it.result!!.toString()
                                     firebaseHelper.mDatabaseRef
                                         .child("images")
-                                        .child(firebaseHelper.mAuth.currentUser!!.uid)
+                                        .child(uid)
                                         .push()
                                         .setValue(url)
                                         .addOnCompleteListener {
                                             if (it.isSuccessful) {
-                                                startActivity(Intent(this,ProfileActivity::class.java))
-                                                finish()
+                                                firebaseHelper.mDatabaseRef.child("feed-post")
+                                                        .child(uid)
+                                                        .push()
+                                                        .setValue(makeFeedPost(uid, url))
+                                                        .addOnCompleteListener {
+                                                            if (it.isSuccessful) {
+                                                                startActivity(Intent(this, ProfileActivity::class.java))
+                                                                finish()
+                                                            } else {
+                                                                this.showToast(it.exception!!.message!!)
+                                                            }
+                                                        }
                                             } else {
                                                 this.showToast(it.exception!!.message!!)
                                             }
@@ -77,4 +100,22 @@ class ShareActivity : MainActivity(2) {
                     }
         }
     }
+
+    private fun makeFeedPost(uid: String, url: String) = FeedPost(
+            uid = uid,
+            username = mUser.username,
+            postImage = url,
+            caption = capture_share_text.text.toString(),
+            userPhoto = mUser.photo
+    )
 }
+
+data class FeedPost(val uid: String = "", val username: String = "", val userPhoto: String? = null,
+                    val postImage: String = "", val likesCount: Int = 0, val commentsCount: Int = 0,
+                    val caption: String = "", val comments: List<Comment> = emptyList(),
+                    val timeStamp: Any = ServerValue.TIMESTAMP) {
+
+    fun timeStampDate(): Date = Date(timeStamp as Long)
+}
+
+data class Commet(val uid: String, val username: String,val comment: String)

@@ -56,11 +56,11 @@
         android:src="@drawable/person"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/image_share_text"
+        app:layout_constraintEnd_toStartOf="@id/capture_share_text"
         android:layout_marginStart="10dp"/>
 
     <EditText
-        android:id="@+id/image_share_text"
+        android:id="@+id/capture_share_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"

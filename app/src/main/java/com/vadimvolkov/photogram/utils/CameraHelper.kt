@@ -37,9 +37,9 @@ class CameraHelper(val activity: Activity) {
         val timeStamp: String = simpleDateFormat.format(Date())
         val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
+                "JPEG_${timeStamp}_", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
         )
     }
 }

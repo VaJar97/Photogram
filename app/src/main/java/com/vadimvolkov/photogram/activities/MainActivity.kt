@@ -28,8 +28,8 @@ abstract class MainActivity(val navNumber: Int) : AppCompatActivity() {
             if (nextActivity != null) {
                 val intent = Intent(this, nextActivity)
                 intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-                startActivity(intent)
                 overridePendingTransition(0,0)  // for deactivate anim
+                startActivity(intent)
                 true
             } else {
                 false

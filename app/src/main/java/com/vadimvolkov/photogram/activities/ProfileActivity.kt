@@ -1,13 +1,16 @@
 package com.vadimvolkov.photogram.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -72,5 +75,11 @@ class ImagesAdapter(private val images: List<String>) : RecyclerView.Adapter<Ima
 
     private fun ImageView.loadImage(image: String) {
         Glide.with(this).load(image).centerCrop().into(this)
+    }
+}
+
+class SquareImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(context, attrs) {
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
     }
 }
