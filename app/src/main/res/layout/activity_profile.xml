@@ -26,9 +26,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/profile_settings"
                 style="@style/toolbar_image"
                 android:src="@drawable/ic_more"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/add_friend_image"
+                style="@style/toolbar_image"
+                android:padding="10dp"
+                android:src="@drawable/ic_add_friend"
+                app:layout_constraintEnd_toStartOf="@+id/profile_settings"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

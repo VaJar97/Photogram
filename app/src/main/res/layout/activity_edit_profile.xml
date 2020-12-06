@@ -39,6 +39,7 @@
                 <ImageView
                     android:id="@+id/image_save"
                     style="@style/toolbar_image"
+                    android:padding="10dp"
                     android:src="@drawable/ic_save"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

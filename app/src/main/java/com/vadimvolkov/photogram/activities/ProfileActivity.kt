@@ -40,6 +40,16 @@ class ProfileActivity : MainActivity(4) {
             toolbar_text.text = mUser.username
         })
 
+
+        profile_settings.setOnClickListener{
+            val intent = Intent(this, ProfileSettingsActivity::class.java)
+            startActivity(intent)
+        }
+        add_friend_image.setOnClickListener {
+            val intent = Intent(this, AddFriendActivity::class.java)
+            startActivity(intent)
+        }
+
         edit_button.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
