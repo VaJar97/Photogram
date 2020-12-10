@@ -33,7 +33,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="background">@color/whiteish</item>
-        <item name="elevation">4dp</item>
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
     <style name="toolbar_image">

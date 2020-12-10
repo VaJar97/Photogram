@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.FirebaseHelper
-import com.vadimvolkov.photogram.utils.ValueEventListenerAdapter
-import com.vadimvolkov.photogram.utils.loadUserPhoto
+import com.vadimvolkov.photogram.utils.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.*
 
@@ -35,7 +33,7 @@ class ProfileActivity : MainActivity(4) {
 
         firebaseHelper = FirebaseHelper(this)
         firebaseHelper.currentUserReference().addValueEventListener(ValueEventListenerAdapter {
-            mUser = it.getValue(User::class.java)!!
+            mUser = it.asUser()!!
             avatar.loadUserPhoto(mUser.photo)
             toolbar_text.text = mUser.username
         })
@@ -82,10 +80,6 @@ class ImagesAdapter(private val images: List<String>) : RecyclerView.Adapter<Ima
     }
 
     override fun getItemCount(): Int = images.size
-
-    private fun ImageView.loadImage(image: String) {
-        Glide.with(this).load(image).centerCrop().into(this)
-    }
 }
 
 class SquareImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(context, attrs) {

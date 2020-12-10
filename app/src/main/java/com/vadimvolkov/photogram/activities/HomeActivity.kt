@@ -23,6 +23,8 @@ import com.bumptech.glide.Glide
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.utils.FirebaseHelper
 import com.vadimvolkov.photogram.utils.ValueEventListenerAdapter
+import com.vadimvolkov.photogram.utils.loadImage
+import com.vadimvolkov.photogram.utils.loadUserPhoto
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.feed_item.view.*
 
@@ -57,10 +59,11 @@ class HomeActivity : MainActivity(0) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         } else {
-            firebaseHelper.mDatabaseRef.child("feed-post")
+            firebaseHelper.mDatabaseRef.child("feed-posts")
                     .child(currentUser.uid)
                     .addValueEventListener(ValueEventListenerAdapter {
                         val posts = it.children.map { it.getValue(FeedPost::class.java)!! }
+                                .sortedByDescending { it.timeStampDate() }
 
                         feed_recycler.adapter = FeedAdapter(posts)
                         feed_recycler.layoutManager = LinearLayoutManager(this)
@@ -83,7 +86,7 @@ class FeedAdapter(private val posts: List<FeedPost>) : RecyclerView.Adapter<Feed
 
         with(holder.view){
             feed_username.text = post.username
-            feed_user_photo.loadImage(post.userPhoto)
+            feed_user_photo.loadUserPhoto(post.userPhoto)
             feed_image.loadImage(post.postImage)
 
             if (post.likesCount == 0) {
@@ -120,12 +123,4 @@ class FeedAdapter(private val posts: List<FeedPost>) : RecyclerView.Adapter<Feed
     }
 
     override fun getItemCount(): Int = posts.size
-
-    private fun ImageView.loadImage(image: String?) {
-        Glide.with(this)
-                .load(image)
-                .centerCrop()
-                .into(this)
-    }
-
 }

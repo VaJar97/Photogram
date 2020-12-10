@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/feed_user_photo"
                 android:layout_width="@dimen/toolbar_height"
                 android:layout_height="@dimen/toolbar_height"

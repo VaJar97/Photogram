@@ -56,7 +56,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         mDatabaseRef.child("users")
                 .child(user!!.uid)
                 .addListenerForSingleValueEvent(ValueEventListenerAdapter {
-                    mUser = it.getValue(User::class.java)!!
+                    mUser = it.asUser()!!
                     name_edit.setText(mUser.name)
                     username_edit.setText(mUser.username)
                     website_edit.setText(mUser.website)

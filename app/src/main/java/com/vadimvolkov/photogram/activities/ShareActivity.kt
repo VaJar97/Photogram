@@ -11,10 +11,7 @@ import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.CameraHelper
-import com.vadimvolkov.photogram.utils.FirebaseHelper
-import com.vadimvolkov.photogram.utils.ValueEventListenerAdapter
-import com.vadimvolkov.photogram.utils.showToast
+import com.vadimvolkov.photogram.utils.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_share.*
 import org.w3c.dom.Comment
@@ -39,7 +36,7 @@ class ShareActivity : MainActivity(2) {
         firebaseHelper = FirebaseHelper(this)
 
         firebaseHelper.currentUserReference().addValueEventListener(ValueEventListenerAdapter{
-            mUser = it.getValue(User::class.java)!!
+            mUser = it.asUser()!!
         })
     }
 
@@ -62,7 +59,7 @@ class ShareActivity : MainActivity(2) {
             firebaseHelper.mStorageRef
                     .child("users")
                     .child(uid)
-                    .child("photo")
+                    .child("images")
                     .child(photoUri.lastPathSegment!!)
                     .putFile(photoUri)
                         .addOnCompleteListener {
@@ -76,7 +73,7 @@ class ShareActivity : MainActivity(2) {
                                         .setValue(url)
                                         .addOnCompleteListener {
                                             if (it.isSuccessful) {
-                                                firebaseHelper.mDatabaseRef.child("feed-post")
+                                                firebaseHelper.mDatabaseRef.child("feed-posts")
                                                         .child(uid)
                                                         .push()
                                                         .setValue(makeFeedPost(uid, url))

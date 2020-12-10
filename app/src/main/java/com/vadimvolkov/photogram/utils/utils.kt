@@ -9,10 +9,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.models.User
 
 class ValueEventListenerAdapter(val handler : (DataSnapshot) -> Unit) : ValueEventListener {
 
@@ -62,3 +65,19 @@ fun Editable.toStringOrNull(): String? {
 fun Activity.showToast(text : String, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, text, duration).show()
 }
+
+fun ImageView.loadImage(image: String?) {
+    if (!(context as Activity).isDestroyed) {
+        Glide.with(this).load(image).centerCrop().into(this)
+    }
+}
+
+fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> {
+    val taskSource = TaskCompletionSource<T>()
+    block(taskSource)
+    return taskSource.task
+}
+
+fun DataSnapshot.asUser(): User? =
+        getValue(User::class.java)?.copy(uid = key!!)
+

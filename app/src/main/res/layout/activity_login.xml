@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/main_button_background"
+            app:background ="@drawable/main_button_background"
             android:text="Sign In"
             android:textColor="@drawable/login_text_color"
             android:stateListAnimator="@animator/main_button_anim"
