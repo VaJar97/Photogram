@@ -55,7 +55,7 @@ class ProfileActivity : MainActivity(4) {
 
         profile_recycler.layoutManager = GridLayoutManager(this, 3) // 3 - column
 
-        firebaseHelper.mDatabaseRef.child("images").child(firebaseHelper.mAuth.currentUser!!.uid)
+        firebaseHelper.mDatabaseRef.child("images").child(firebaseHelper.currentUserUid()!!)
             .addValueEventListener(ValueEventListenerAdapter{
                 val images = it.children.map{it.getValue(String::class.java)!!}
                 profile_recycler.adapter = ImagesAdapter(images)

@@ -1,21 +1,13 @@
 package com.vadimvolkov.photogram.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ServerValue
-import com.google.firebase.storage.StorageReference
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.models.FeedPost
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.*
-import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_share.*
-import org.w3c.dom.Comment
-import java.util.*
 
 class ShareActivity : MainActivity(2) {
 
@@ -54,7 +46,7 @@ class ShareActivity : MainActivity(2) {
 
     private fun sharePhoto() {
         if (mCameraHelper.photoUri != null) {
-            val uid = firebaseHelper.mAuth.currentUser!!.uid
+            val uid = firebaseHelper.currentUserUid()!!
             val photoUri = mCameraHelper.photoUri!!
             firebaseHelper.mStorageRef
                     .child("users")
@@ -107,12 +99,3 @@ class ShareActivity : MainActivity(2) {
     )
 }
 
-data class FeedPost(val uid: String = "", val username: String = "", val userPhoto: String? = null,
-                    val postImage: String = "", val likesCount: Int = 0, val commentsCount: Int = 0,
-                    val caption: String = "", val comments: List<Comment> = emptyList(),
-                    val timeStamp: Any = ServerValue.TIMESTAMP) {
-
-    fun timeStampDate(): Date = Date(timeStamp as Long)
-}
-
-data class Commet(val uid: String, val username: String,val comment: String)

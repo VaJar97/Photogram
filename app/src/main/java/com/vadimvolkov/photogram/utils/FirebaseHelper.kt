@@ -16,10 +16,11 @@ class FirebaseHelper (var activity: Activity) {
     val mStorageRef = FirebaseStorage.getInstance().reference
     val mAuth = FirebaseAuth.getInstance()
 
-    fun currentUserReference() = mDatabaseRef.child("users").child(mAuth.currentUser!!.uid)
+    fun currentUserUid(): String? = mAuth.currentUser?.uid
+    fun currentUserReference(): DatabaseReference = mDatabaseRef.child("users").child(currentUserUid()!!)
 
     fun uploadPhotoToStorage(mAuth: FirebaseAuth, uri: Uri?, onSuccess: () -> Unit) {
-        mStorageRef.child("users/${mAuth.currentUser!!.uid}/photo").putFile(uri!!)
+        mStorageRef.child("users/${currentUserUid()!!}/photo").putFile(uri!!)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess()
@@ -30,7 +31,7 @@ class FirebaseHelper (var activity: Activity) {
     }
 
     fun getDownloadUrl(mAuth: FirebaseAuth, onSuccess: (it: Task<Uri>) -> Unit) {
-        mStorageRef.child("users/${mAuth.currentUser!!.uid}/photo").downloadUrl
+        mStorageRef.child("users/${currentUserUid()!!}/photo").downloadUrl
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess(it)
@@ -41,7 +42,7 @@ class FirebaseHelper (var activity: Activity) {
     }
 
     fun uploadDatabasePhotoUrl(mAuth: FirebaseAuth, mUrl: String, onSuccess: () -> Unit) {
-        mDatabaseRef.child("users/${mAuth.currentUser!!.uid}/photo")
+        mDatabaseRef.child("users/${currentUserUid()!!}/photo")
             .setValue(mUrl)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

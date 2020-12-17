@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.models.FeedPost
 import com.vadimvolkov.photogram.models.User
 
 class ValueEventListenerAdapter(val handler : (DataSnapshot) -> Unit) : ValueEventListener {
@@ -79,5 +80,8 @@ fun <T> task(block: (TaskCompletionSource<T>) -> Unit): Task<T> {
 }
 
 fun DataSnapshot.asUser(): User? =
-        getValue(User::class.java)?.copy(uid = key!!)
+        getValue(User::class.java)?.copy(uid = key)
+
+fun DataSnapshot.asFeedPost(): FeedPost? =
+    getValue(FeedPost::class.java)?.copy(id = key)
 

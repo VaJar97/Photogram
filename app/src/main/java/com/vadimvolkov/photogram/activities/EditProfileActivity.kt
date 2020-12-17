@@ -125,7 +125,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         if (user.website != mUser.website) updatesMap["website"] = user.website
         if (user.bio != mUser.bio) updatesMap["bio"] = user.bio
 
-        mDatabaseRef.child("users").child(mAuth.currentUser!!.uid).updateChildren(updatesMap)
+        mDatabaseRef.child("users").child(firebaseHelper.currentUserUid()!!).updateChildren(updatesMap)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         showToast("Successfully updated")

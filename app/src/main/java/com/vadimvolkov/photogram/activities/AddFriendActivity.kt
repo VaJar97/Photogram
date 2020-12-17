@@ -26,7 +26,7 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
         setContentView(R.layout.activity_add_friend)
 
         firebaseHelper = FirebaseHelper(this)
-        val uid = firebaseHelper.mAuth.currentUser!!.uid
+        val uid = firebaseHelper.currentUserUid()!!
 
         image_back.setOnClickListener {
             finish()
@@ -63,11 +63,11 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
     private fun setFollow(uid: String, follow: Boolean, onSuccess: () -> Unit) {
 
         val followTask = firebaseHelper.mDatabaseRef.child("users")
-                .child(mUser.uid).child("follows").child(uid)
+                .child(mUser.uid!!).child("follows").child(uid)
         val setFollow = if (follow) followTask.setValue(follow) else followTask.removeValue()
 
         val followersTask = firebaseHelper.mDatabaseRef.child("users")
-                .child(uid).child("followers").child(mUser.uid)
+                .child(uid).child("followers").child(mUser.uid!!)
         val setFollower = if (follow) followersTask.setValue(follow) else followersTask.removeValue()
 
         val feedPostsTask = task<Void> {taskSource ->
@@ -79,7 +79,7 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
                             it.children.map { it.key to null }.toMap()
                         }
                         firebaseHelper.mDatabaseRef.child("feed-posts")
-                                .child(mUser.uid).updateChildren(postsMap)
+                                .child(mUser.uid!!).updateChildren(postsMap)
                                 .addOnCompleteListener { TaskSourceOnCompleteListener(taskSource) }
                     })
         }
