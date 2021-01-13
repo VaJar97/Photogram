@@ -1,5 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Photogram</string>
     <string name="signUp_request">Do not have an account? <b>Sign Up.</b></string>
     <string name="please_enter_password">Please, enter your password</string>
+    <string name="discover_people">Discover people</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="change_photo">Change photo</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="website">Website</string>
+    <string name="bio">Bio</string>
+    <string name="private_information">Private Information</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone</string>
+    <string name="sign_in">Sign In</string>
+    <string name="posts">posts</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
+    <string name="profile_settings">Profile settings</string>
+    <string name="sign_out">Sign out</string>
+    <string name="share_to">Share to</string>
+    <string name="share">Share</string>
+    <string name="enter_a_caption_here">Enter a caption here …</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="next">Next</string>
+    <string name="enter_full_name_and_password">Enter full name and password</string>
+    <string name="full_name">Full name</string>
+    <string name="finish">Finish</string>
+    <string name="successfuly_udated">Successfully updated</string>
+    <string name="you_should_enter_your_password">You should enter password</string>
+    <string name="this_email_already_exist">This email already exist</string>
+    <string name="please_enter_email">Please, enter email</string>
+    <string name="please_back_and_enter_email">Please, back and enter email</string>
+    <string name="please_enter_name_and_password">Please, enter name and password</string>
+    <string name="trouble_with_registration">Trouble with registration</string>
+    <string name="trouble_with_signIn">Trouble with sign in/ registration</string>
+    <string name="error_with_mAuth_signIn">Error with mAuth signIn</string>
+    <string name="error_with_email_or_password">Error with email or password</string>
+    <string name="please_enter_name">Please enter name</string>
+    <string name="please_enter_username">Please enter username</string>
+    <plurals name="likes_count">
+        <item quantity="one">like</item>
+        <item quantity="other">likes</item>
+    </plurals>
 </resources>

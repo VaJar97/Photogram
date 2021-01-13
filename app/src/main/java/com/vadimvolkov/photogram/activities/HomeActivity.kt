@@ -128,7 +128,8 @@ class FeedAdapter(private val listener: Listener,
             if (likeSet.likesCount == 0) {
                feed_like_text.visibility = View.GONE
             } else {
-                feed_like_text.text = "${likeSet.likesCount} likes"
+                val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount)
+                feed_like_text.text = likeSet.likesCount.toString() + " " + quantityString
             }
 
             setCaptionText(post)

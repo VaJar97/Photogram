@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/toolbar_label_text"
                 style="@style/toolbar_text"
-                android:text="Share to"
+                android:text="@string/share_to"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_back"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Share"
+                android:text="@string/share"
                 android:textColor="@color/ic_launcher_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -65,7 +65,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:background="@android:color/transparent"
-        android:hint="Enter a caption here ..."
+        android:hint="@string/enter_a_caption_here"
         app:layout_constraintBottom_toBottomOf="@+id/image_share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image_share"

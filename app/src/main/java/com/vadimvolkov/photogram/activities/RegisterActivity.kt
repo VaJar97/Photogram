@@ -60,11 +60,11 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
                             .addToBackStack(null)
                             .commit()
                     } else {
-                        showToast("This email already exist")
+                        showToast(getString(R.string.this_email_already_exist))
                     }
             }
         } else {
-            showToast("Please, enter email")
+            showToast(getString(R.string.please_enter_email))
         }
     }
 
@@ -80,11 +80,11 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
                         }
                 }
             } else {
-                showToast("Please, back and enter email")
+                showToast(getString(R.string.please_back_and_enter_email))
                 supportFragmentManager.popBackStack()
             }
         } else {
-            showToast("Please, enter name and password")
+            showToast(getString(R.string.please_enter_name_and_password))
         }
     }
 
@@ -114,7 +114,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
             if (it.isSuccessful) {
                 onSuccess()
             } else {
-                showToast("Trouble with registration")
+                showToast(getString(R.string.trouble_with_registration))
             }
         }
     }
@@ -125,7 +125,7 @@ class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
             if (it.isSuccessful) {
                 onSuccess(it.result!!)
             } else {
-                showToast("Trouble with sign in/ registration")
+                showToast(getString(R.string.trouble_with_signIn))
             }
         }
     }

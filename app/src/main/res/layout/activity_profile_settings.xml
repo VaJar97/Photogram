@@ -16,7 +16,7 @@
 
             <TextView
                 style="@style/toolbar_text"
-                android:text="Profile settings"
+                android:text="@string/profile_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_back"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
         android:id="@+id/profile_sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign out"
+        android:text="@string/sign_out"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

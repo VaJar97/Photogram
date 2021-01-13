@@ -110,9 +110,9 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
 
     private fun validate(user: User): String? =
             when {
-                user.name.isEmpty() -> "Please enter name"
-                user.username.isEmpty() -> "Please enter username"
-                user.email.isEmpty() -> "Please enter email"
+                user.name.isEmpty() -> getString(R.string.please_enter_name)
+                user.username.isEmpty() -> getString(R.string.please_enter_username)
+                user.email.isEmpty() -> getString(R.string.please_enter_email)
                 else -> null
             }
 
@@ -128,7 +128,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         mDatabaseRef.child("users").child(firebaseHelper.currentUserUid()!!).updateChildren(updatesMap)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showToast("Successfully updated")
+                        showToast(getString(R.string.successfuly_udated))
                         finish()
                     } else {
                         showToast(it.exception!!.message!!)
@@ -146,7 +146,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
                 }
             }
         } else {
-            showToast("You should enter password")
+            showToast(getString(R.string.you_should_enter_your_password))
         }
     }
 }

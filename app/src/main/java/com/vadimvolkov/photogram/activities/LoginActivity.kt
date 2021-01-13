@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.utils.coordinateBtnAndInputs
+import com.vadimvolkov.photogram.utils.showToast
 import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
@@ -57,13 +58,11 @@ class LoginActivity : AppCompatActivity(), KeyboardVisibilityEventListener,
                             startActivity(Intent(this, HomeActivity::class.java))
                             finish()
                         } else {
-                            Toast.makeText(this, "Error with mAuth signIn", Toast.LENGTH_LONG)
-                                .show()
+                            showToast(getString(R.string.error_with_mAuth_signIn))
                         }
                     }
                 } else {
-                    Toast.makeText(this, "Error with email or password", Toast.LENGTH_LONG)
-                        .show()
+                    showToast(getString(R.string.error_with_email_or_password))
                 }
             }
 

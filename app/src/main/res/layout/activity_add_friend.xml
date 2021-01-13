@@ -16,7 +16,7 @@
 
             <TextView
                 style="@style/toolbar_text"
-                android:text="Discover people"
+                android:text="@string/discover_people"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_back"
                 app:layout_constraintTop_toTopOf="parent" />
