@@ -76,6 +76,7 @@ class HomeActivity : MainActivity(0), FeedAdapter.Listener {
             if (it.exists()) likeReference.removeValue()
             else likeReference.setValue(true)
         })
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun loadLikes(postId: String, position: Int) {
@@ -125,10 +126,11 @@ class FeedAdapter(private val listener: Listener,
             feed_user_photo.loadUserPhoto(post.userPhoto)
             feed_image.loadImage(post.postImage)
 
+            val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount)
+
             if (likeSet.likesCount == 0) {
-               feed_like_text.visibility = View.GONE
+                //feed_like_text.visibility = View.INVISIBLE
             } else {
-                val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount)
                 feed_like_text.text = likeSet.likesCount.toString() + " " + quantityString
             }
 

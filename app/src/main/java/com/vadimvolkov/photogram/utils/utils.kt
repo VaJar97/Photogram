@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
@@ -84,4 +86,7 @@ fun DataSnapshot.asUser(): User? =
 
 fun DataSnapshot.asFeedPost(): FeedPost? =
     getValue(FeedPost::class.java)?.copy(id = key)
+
+fun <A, B> LiveData<A>.map(f: (A) -> B) =
+    Transformations.map(this, f)
 
