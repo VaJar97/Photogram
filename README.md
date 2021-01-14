@@ -1,4 +1,4 @@
 # Photogram
 Instagram clone. Now finished yet
 # Tools
-Android Studio / Kotlin / CircleImage
+Android Studio / Kotlin / MVVM / Firebase
