@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.addFriends.AddFriendActivity
+import com.vadimvolkov.photogram.editProfile.EditProfileActivity
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.*
 import kotlinx.android.synthetic.main.activity_profile.*

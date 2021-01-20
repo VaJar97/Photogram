@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.EditProfileActivity">
+    tools:context=".editProfile.EditProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,15 +63,17 @@
 
         <TextView
             android:id="@+id/change_photo_text"
-            android:layout_width="82dp"
-            android:layout_height="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/change_photo"
             android:textColor="@android:color/holo_blue_dark"
             android:textStyle="bold"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_edit"
+            app:layout_constraintBottom_toTopOf="@+id/name_label"/>
 
         <TextView
             android:id="@+id/name_label"

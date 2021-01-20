@@ -19,7 +19,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize"/>
-        <activity android:name=".activities.EditProfileActivity" />
+        <activity android:name=".editProfile.EditProfileActivity" />
         <activity android:name=".activities.ProfileSettingsActivity" />
         <activity android:name=".addFriends.AddFriendActivity" />
         <activity android:name=".activities.ProfileActivity" />

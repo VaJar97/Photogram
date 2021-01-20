@@ -10,9 +10,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CameraHelper(val activity: Activity) {
-
-    private val TAG = "CameraPictureTaker"
+class CameraHelper(private val activity: Activity) {
 
     var photoUri: Uri? = null
     val REQUEST_IMAGE_CAPTURE = 1

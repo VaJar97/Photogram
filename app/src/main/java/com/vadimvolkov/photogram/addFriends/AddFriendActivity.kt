@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.activities.ViewModelFactory
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.showToast
 import kotlinx.android.synthetic.main.activity_add_friend.*
@@ -20,7 +21,7 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_friend)
 
-        mViewModel = ViewModelProvider(this, AddFriendsViewModelFactory())
+        mViewModel = ViewModelProvider(this, ViewModelFactory())
             .get(AddFriendsViewModel::class.java)
 
         image_back.setOnClickListener {
