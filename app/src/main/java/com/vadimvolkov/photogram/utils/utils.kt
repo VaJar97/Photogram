@@ -22,7 +22,7 @@ import com.vadimvolkov.photogram.models.User
 
 class ValueEventListenerAdapter(val handler : (DataSnapshot) -> Unit) : ValueEventListener {
 
-    private val TAG = "ValueEventListenerAdapt"
+    private val TAG = "utils.ValueEventListenerAdapt"
 
     override fun onDataChange(data: DataSnapshot) {
         handler(data)

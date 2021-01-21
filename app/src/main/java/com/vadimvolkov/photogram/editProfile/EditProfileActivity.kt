@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DatabaseReference
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.activities.MainActivity
 import com.vadimvolkov.photogram.activities.ProfileActivity
 import com.vadimvolkov.photogram.activities.ViewModelFactory
 import com.vadimvolkov.photogram.models.User
@@ -16,7 +17,7 @@ import com.vadimvolkov.photogram.utils.*
 import com.vadimvolkov.photogram.views.PasswordDialog
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
-class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
+class EditProfileActivity : MainActivity(), PasswordDialog.Listener {
 
     private lateinit var mViewModel: EditProfileViewModel
 
@@ -34,8 +35,7 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
             finish()
         }
 
-        mViewModel = ViewModelProvider(this, ViewModelFactory())
-                .get(EditProfileViewModel::class.java)
+        mViewModel = initViewModel()
         cameraHelper = CameraHelper(this)
 
         image_save.setOnClickListener { saveUpdateInfo() }
@@ -60,7 +60,6 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         if ((requestCode == cameraHelper.REQUEST_IMAGE_CAPTURE) && (resultCode == RESULT_OK)) {
             // upload image to firebase storage
             mViewModel.uploadAndSetUserPhoto(cameraHelper.photoUri!!)
-                    .addOnFailureListener { showToast(it.message!!) }
         }
     }
 
@@ -101,7 +100,6 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
                     showToast(getString(R.string.successfuly_udated))
                     finish()
                 }
-                .addOnFailureListener { showToast(it.message!!, Toast.LENGTH_SHORT) }
     }
 
     override fun onPasswordConfirm(password: String) {
@@ -116,10 +114,6 @@ class EditProfileActivity : AppCompatActivity(), PasswordDialog.Listener {
         } else {
             showToast(getString(R.string.you_should_enter_your_password))
         }
-    }
-
-    companion object {
-        const val TAG = "EditProfileActivity"
     }
 }
 

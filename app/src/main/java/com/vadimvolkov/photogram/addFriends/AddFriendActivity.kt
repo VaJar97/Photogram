@@ -6,12 +6,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.activities.MainActivity
 import com.vadimvolkov.photogram.activities.ViewModelFactory
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.showToast
 import kotlinx.android.synthetic.main.activity_add_friend.*
 
-class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
+class AddFriendActivity : MainActivity(), FriendsAdapter.Listener {
     private lateinit var mAdapter: FriendsAdapter
     private lateinit var mUsers: List<User>
     private lateinit var mUser: User
@@ -21,8 +22,7 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_friend)
 
-        mViewModel = ViewModelProvider(this, ViewModelFactory())
-            .get(AddFriendsViewModel::class.java)
+        mViewModel = initViewModel()
 
         image_back.setOnClickListener {
             finish()
@@ -56,7 +56,6 @@ class AddFriendActivity : AppCompatActivity(), FriendsAdapter.Listener {
     private fun setFollow(uid: String, follow: Boolean, onSuccess: () -> Unit) {
         mViewModel.setFollow(mUser.uid!!, uid, follow)
             .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { showToast(it.message!!) }
     }
 
 }

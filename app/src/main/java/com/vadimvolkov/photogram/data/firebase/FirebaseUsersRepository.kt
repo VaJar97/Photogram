@@ -1,29 +1,55 @@
-package com.vadimvolkov.photogram.editProfile
+package com.vadimvolkov.photogram.data.firebase
 
 import android.net.Uri
-import android.util.Log
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.StorageReference
 import com.vadimvolkov.photogram.addFriends.toUnit
+import com.vadimvolkov.photogram.data.UsersRepository
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.*
 import java.lang.IllegalStateException
 
-interface EditProfileRepository {
-    fun getUser(): LiveData<User>
-    abstract fun uploadUserPhoto(localImage: Uri): Task<Uri>
-    abstract fun updateUserPhoto(downloadUrl: Uri): Task<Unit>
-    abstract fun updateEmail(currentEmail: String, newEmail: String, password: String): Task<Unit>
-    abstract fun updateUserProfile(currentUser: User, newUser: User): Task<Unit>
+class FirebaseUsersRepository: UsersRepository {
 
-}
+    override fun getUsers(): LiveData<List<User>> =
+        mDatabaseRef.child("users").liveData().map {
+            it.children.map { it.asUser()!! }
+        }
 
-class FirebaseEditProfileRepository: EditProfileRepository {
+    override fun addFollow(fromUid: String, toUid: String): Task<Unit> =
+        getFollowsRef(fromUid, toUid)
+            .setValue(true)
+            .toUnit()
+
+    override fun removeFollow(fromUid: String, toUid: String): Task<Unit> =
+        getFollowsRef(fromUid, toUid)
+            .removeValue()
+            .toUnit()
+
+    override fun addFollower(fromUid: String, toUid: String): Task<Unit> =
+        getFollowersRef(fromUid, toUid)
+            .setValue(true)
+            .toUnit()
+
+    override fun removeFollower(fromUid: String, toUid: String): Task<Unit> =
+        getFollowersRef(fromUid, toUid)
+            .removeValue()
+            .toUnit()
+
+    override fun userUid() =
+        FirebaseAuth.getInstance().currentUser?.uid
+
+    private fun getFollowsRef(fromUid: String, toUid: String) =
+        mDatabaseRef.child("users")
+            .child(fromUid).child("follows").child(toUid)
+
+    private fun getFollowersRef(fromUid: String, toUid: String) =
+        mDatabaseRef.child("users")
+            .child(toUid).child("followers").child(fromUid)
+
     override fun getUser(): LiveData<User> =
             mDatabaseRef.child("users").child(currentUserUid()!!).liveData().map {
                 it.asUser()
@@ -54,13 +80,13 @@ class FirebaseEditProfileRepository: EditProfileRepository {
             }.toUnit()
         } else {
             Tasks.forException(IllegalStateException("User is not authenticated"))
-        }
+        } 
     }
 
     override fun updateUserProfile(currentUser: User, newUser: User): Task<Unit> {
         val updatesMap = mutableMapOf<String, Any?>()
         if (newUser.name != currentUser.name) updatesMap["name"] = newUser.name
-        if (newUser.username != currentUser.username) updatesMap["newUsername"] = newUser.username
+        if (newUser.username != currentUser.username) updatesMap["username"] = newUser.username
         if (newUser.email != currentUser.email) updatesMap["email"] = newUser.email
         if (newUser.phone != currentUser.phone) updatesMap["phone"] = newUser.phone
         if (newUser.website != currentUser.website) updatesMap["website"] = newUser.website

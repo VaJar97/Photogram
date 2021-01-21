@@ -15,24 +15,25 @@ import com.vadimvolkov.photogram.addFriends.AddFriendActivity
 import com.vadimvolkov.photogram.editProfile.EditProfileActivity
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.views.setupBottomNavigation
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : MainActivity(4) {
+class ProfileActivity : MainActivity() {
 
-    private val TAG = "ProfileActivity"
     private lateinit var firebaseHelper: FirebaseHelper
     private lateinit var mUser: User
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        setupBottomNavigation()
+        setupBottomNavigation(4)
 
         firebaseHelper = FirebaseHelper(this)
-        firebaseHelper.currentUserReference().addValueEventListener(ValueEventListenerAdapter {
-            mUser = it.asUser()!!
-            avatar.loadUserPhoto(mUser.photo)
-            toolbar_text.text = mUser.username
+        firebaseHelper.currentUserReference().addValueEventListener(
+                ValueEventListenerAdapter {
+                    mUser = it.asUser()!!
+                    avatar.loadUserPhoto(mUser.photo)
+                    toolbar_text.text = mUser.username
         })
 
 

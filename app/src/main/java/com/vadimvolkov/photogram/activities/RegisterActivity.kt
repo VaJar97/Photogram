@@ -26,8 +26,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 class RegisterActivity : AppCompatActivity(), EmailFragment.Listener,
         NamePassFragment.Listener, KeyboardVisibilityEventListener {
 
-    private val TAG = "RegisterActivity"
-    
     private var tempName : String? = null
     private var tempPassword : String? = null
     private var tempEmail : String? = null

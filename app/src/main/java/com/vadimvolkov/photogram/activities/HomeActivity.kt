@@ -20,11 +20,12 @@ import com.google.firebase.database.ValueEventListener
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.FeedPost
 import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.views.setupBottomNavigation
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.feed_item.view.*
 
 
-class HomeActivity : MainActivity(0), FeedAdapter.Listener {
+class HomeActivity : MainActivity(), FeedAdapter.Listener {
 
     private lateinit var firebaseHelper: FirebaseHelper
     private lateinit var mAdapter: FeedAdapter
@@ -33,7 +34,7 @@ class HomeActivity : MainActivity(0), FeedAdapter.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setupBottomNavigation()
+        setupBottomNavigation(0)
 
         firebaseHelper  = FirebaseHelper(this)
         firebaseHelper.mAuth.addAuthStateListener {
@@ -47,12 +48,12 @@ class HomeActivity : MainActivity(0), FeedAdapter.Listener {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = firebaseHelper.mAuth.currentUser
+        val currentUser = mAuth.currentUser
         if (currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         } else {
-            firebaseHelper.mDatabaseRef.child("feed-posts")
+            mDatabaseRef.child("feed-posts")
                     .child(currentUser.uid)
                     .addValueEventListener(ValueEventListenerAdapter {
                         val posts = it.children.map { it.asFeedPost()!! }
@@ -129,7 +130,7 @@ class FeedAdapter(private val listener: Listener,
             val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount)
 
             if (likeSet.likesCount == 0) {
-                //feed_like_text.visibility = View.INVISIBLE
+                feed_like_text.visibility = View.INVISIBLE
             } else {
                 feed_like_text.text = likeSet.likesCount.toString() + " " + quantityString
             }

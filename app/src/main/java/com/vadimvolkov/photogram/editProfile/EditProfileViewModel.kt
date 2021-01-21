@@ -3,29 +3,29 @@ package com.vadimvolkov.photogram.editProfile
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
+import com.vadimvolkov.photogram.data.UsersRepository
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.currentUserUid
-import com.vadimvolkov.photogram.utils.mDatabaseRef
-import com.vadimvolkov.photogram.utils.mStorageRef
 
-class EditProfileViewModel(private val repository: EditProfileRepository): ViewModel() {
+class EditProfileViewModel(private val failureListener: OnFailureListener,
+                           private val usersRepo: UsersRepository): ViewModel() {
 
-    val user: LiveData<User> = repository.getUser()
+    val user: LiveData<User> = usersRepo.getUser()
 
     fun uploadAndSetUserPhoto(localImage: Uri): Task<Unit> =
-        repository.uploadUserPhoto(localImage).onSuccessTask { downloadUrl ->
-            repository.updateUserPhoto(downloadUrl!!)
-        }
+        usersRepo.uploadUserPhoto(localImage).onSuccessTask { downloadUrl ->
+            usersRepo.updateUserPhoto(downloadUrl!!)
+        }.addOnFailureListener(failureListener)
 
     fun updateEmail(currentEmail: String, newEmail: String, password: String): Task<Unit> =
-        repository.updateEmail(
+        usersRepo.updateEmail(
                 currentEmail = currentEmail,
                 newEmail = newEmail,
                 password = password
-        )
+        ).addOnFailureListener(failureListener)
 
     fun updateUserProfile(currentUser: User, newUser: User): Task<Unit> =
-        repository.updateUserProfile(currentUser = currentUser, newUser = newUser)
+        usersRepo.updateUserProfile(currentUser = currentUser, newUser = newUser)
+            .addOnFailureListener(failureListener)
 }

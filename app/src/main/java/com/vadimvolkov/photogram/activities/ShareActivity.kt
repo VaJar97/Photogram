@@ -9,7 +9,7 @@ import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.utils.*
 import kotlinx.android.synthetic.main.activity_share.*
 
-class ShareActivity : MainActivity(2) {
+class ShareActivity : MainActivity() {
 
     private lateinit var mCameraHelper: CameraHelper
     private lateinit var firebaseHelper: FirebaseHelper
@@ -45,10 +45,9 @@ class ShareActivity : MainActivity(2) {
     }
 
     private fun sharePhoto() {
-        if (mCameraHelper.photoUri != null) {
-            val uid = firebaseHelper.currentUserUid()!!
-            val photoUri = mCameraHelper.photoUri!!
-            firebaseHelper.mStorageRef
+        mCameraHelper.photoUri?.let { photoUri ->
+            val uid = currentUserUid()!!
+            mStorageRef
                     .child("users")
                     .child(uid)
                     .child("images")
@@ -58,14 +57,14 @@ class ShareActivity : MainActivity(2) {
                             if (it.isSuccessful) {
                                 it.result!!.storage.downloadUrl.addOnCompleteListener {
                                     val url = it.result!!.toString()
-                                    firebaseHelper.mDatabaseRef
+                                    mDatabaseRef
                                         .child("images")
                                         .child(uid)
                                         .push()
                                         .setValue(url)
                                         .addOnCompleteListener {
                                             if (it.isSuccessful) {
-                                                firebaseHelper.mDatabaseRef.child("feed-posts")
+                                                mDatabaseRef.child("feed-posts")
                                                         .child(uid)
                                                         .push()
                                                         .setValue(makeFeedPost(uid, url))
@@ -90,7 +89,7 @@ class ShareActivity : MainActivity(2) {
         }
     }
 
-    private fun makeFeedPost(uid: String, url: String) = FeedPost(
+    private fun makeFeedPost(uid: String, url: String) = FeedPost (
             uid = uid,
             username = mUser.username,
             postImage = url,
