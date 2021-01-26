@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

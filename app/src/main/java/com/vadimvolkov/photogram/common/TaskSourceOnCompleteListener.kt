@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.utils
+package com.vadimvolkov.photogram.common
 
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task

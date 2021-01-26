@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens.common
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.vadimvolkov.photogram.utils.showToast
 
 
 abstract class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.views
+package com.vadimvolkov.photogram.screens.common
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,8 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vadimvolkov.photogram.R
-import com.vadimvolkov.photogram.activities.*
+import com.vadimvolkov.photogram.screens.*
+import com.vadimvolkov.photogram.screens.common.MainActivity
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
 
 class MyBottomNavigation (

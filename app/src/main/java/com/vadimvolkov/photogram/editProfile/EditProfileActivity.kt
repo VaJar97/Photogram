@@ -3,18 +3,12 @@ package com.vadimvolkov.photogram.editProfile
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
-import com.google.firebase.database.DatabaseReference
 import com.vadimvolkov.photogram.R
-import com.vadimvolkov.photogram.activities.MainActivity
-import com.vadimvolkov.photogram.activities.ProfileActivity
-import com.vadimvolkov.photogram.activities.ViewModelFactory
+import com.vadimvolkov.photogram.screens.ProfileActivity
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.*
-import com.vadimvolkov.photogram.views.PasswordDialog
+import com.vadimvolkov.photogram.screens.common.*
+import com.vadimvolkov.photogram.screens.common.PasswordDialog
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : MainActivity(), PasswordDialog.Listener {

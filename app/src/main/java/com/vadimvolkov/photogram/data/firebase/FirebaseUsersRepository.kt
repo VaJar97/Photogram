@@ -6,10 +6,13 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.vadimvolkov.photogram.addFriends.toUnit
+import com.vadimvolkov.photogram.common.toUnit
 import com.vadimvolkov.photogram.data.UsersRepository
 import com.vadimvolkov.photogram.models.User
+import com.vadimvolkov.photogram.common.task
 import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.data.common.map
+import com.vadimvolkov.photogram.data.firebase.common.*
 import java.lang.IllegalStateException
 
 class FirebaseUsersRepository: UsersRepository {
@@ -95,4 +98,3 @@ class FirebaseUsersRepository: UsersRepository {
         return mDatabaseRef.child("users").child(currentUserUid()!!).updateChildren(updatesMap).toUnit()
     }
 }
-

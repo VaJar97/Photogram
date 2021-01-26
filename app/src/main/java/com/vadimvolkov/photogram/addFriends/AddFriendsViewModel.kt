@@ -7,8 +7,8 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.vadimvolkov.photogram.data.FeedPostsRepository
 import com.vadimvolkov.photogram.data.UsersRepository
+import com.vadimvolkov.photogram.data.common.map
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.*
 
 class AddFriendsViewModel(
     private val failureListener: OnFailureListener,
@@ -22,6 +22,7 @@ class AddFriendsViewModel(
             }
             userList.first() to otherUsersList
         }
+
     fun setFollow(currentUid: String, uid: String, follow: Boolean): Task<Void> {
         return( if (follow) {
             Tasks.whenAll(

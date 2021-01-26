@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.utils
+package com.vadimvolkov.photogram.screens.common
 
 import android.app.Activity
 import android.content.Intent

@@ -1,8 +1,9 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.os.Bundle
 import android.util.Log
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.screens.common.MainActivity
 import com.vadimvolkov.photogram.views.setupBottomNavigation
 
 class SearchActivity : MainActivity() {

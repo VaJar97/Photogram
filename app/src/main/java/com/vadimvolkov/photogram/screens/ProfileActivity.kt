@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.content.Context
 import android.content.Intent
@@ -12,9 +12,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.addFriends.AddFriendActivity
+import com.vadimvolkov.photogram.data.firebase.common.FirebaseHelper
+import com.vadimvolkov.photogram.data.firebase.common.asUser
 import com.vadimvolkov.photogram.editProfile.EditProfileActivity
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.screens.common.MainActivity
+import com.vadimvolkov.photogram.common.ValueEventListenerAdapter
+import com.vadimvolkov.photogram.screens.common.loadImage
+import com.vadimvolkov.photogram.screens.common.loadUserPhoto
 import com.vadimvolkov.photogram.views.setupBottomNavigation
 import kotlinx.android.synthetic.main.activity_profile.*
 

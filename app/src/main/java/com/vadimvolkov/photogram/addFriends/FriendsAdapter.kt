@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
+import com.vadimvolkov.photogram.screens.common.loadUserPhoto
 import com.vadimvolkov.photogram.utils.*
 import kotlinx.android.synthetic.main.add_friend_item.view.*
 

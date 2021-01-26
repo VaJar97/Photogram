@@ -1,15 +1,11 @@
 package com.vadimvolkov.photogram.addFriends
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vadimvolkov.photogram.R
-import com.vadimvolkov.photogram.activities.MainActivity
-import com.vadimvolkov.photogram.activities.ViewModelFactory
+import com.vadimvolkov.photogram.screens.common.MainActivity
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.showToast
 import kotlinx.android.synthetic.main.activity_add_friend.*
 
 class AddFriendActivity : MainActivity(), FriendsAdapter.Listener {

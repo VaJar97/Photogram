@@ -1,12 +1,16 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.content.Intent
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.data.firebase.common.*
 import com.vadimvolkov.photogram.models.FeedPost
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.screens.common.MainActivity
+import com.vadimvolkov.photogram.common.ValueEventListenerAdapter
+import com.vadimvolkov.photogram.screens.common.CameraHelper
+import com.vadimvolkov.photogram.screens.common.showToast
 import kotlinx.android.synthetic.main.activity_share.*
 
 class ShareActivity : MainActivity() {

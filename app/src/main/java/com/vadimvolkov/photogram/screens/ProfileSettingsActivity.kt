@@ -1,9 +1,9 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.vadimvolkov.photogram.R
-import com.vadimvolkov.photogram.utils.FirebaseHelper
+import com.vadimvolkov.photogram.data.firebase.common.FirebaseHelper
 import kotlinx.android.synthetic.main.activity_profile_settings.*
 
 class ProfileSettingsActivity: AppCompatActivity() {

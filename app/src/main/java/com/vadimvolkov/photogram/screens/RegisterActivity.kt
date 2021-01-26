@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.content.Context
 import android.content.Intent
@@ -14,8 +14,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.models.User
-import com.vadimvolkov.photogram.utils.coordinateBtnAndInputs
-import com.vadimvolkov.photogram.utils.showToast
+import com.vadimvolkov.photogram.screens.common.coordinateBtnAndInputs
+import com.vadimvolkov.photogram.screens.common.showToast
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_email.next_button

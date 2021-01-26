@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -18,8 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ValueEventListener
 import com.vadimvolkov.photogram.R
+import com.vadimvolkov.photogram.data.firebase.common.FirebaseHelper
+import com.vadimvolkov.photogram.data.firebase.common.asFeedPost
+import com.vadimvolkov.photogram.data.firebase.common.mAuth
+import com.vadimvolkov.photogram.data.firebase.common.mDatabaseRef
 import com.vadimvolkov.photogram.models.FeedPost
-import com.vadimvolkov.photogram.utils.*
+import com.vadimvolkov.photogram.screens.common.MainActivity
+import com.vadimvolkov.photogram.common.ValueEventListenerAdapter
+import com.vadimvolkov.photogram.screens.common.loadImage
+import com.vadimvolkov.photogram.screens.common.loadUserPhoto
 import com.vadimvolkov.photogram.views.setupBottomNavigation
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.feed_item.view.*
@@ -127,12 +134,12 @@ class FeedAdapter(private val listener: Listener,
             feed_user_photo.loadUserPhoto(post.userPhoto)
             feed_image.loadImage(post.postImage)
 
-            val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount)
+            val quantityString = holder.view.context.resources.getQuantityString(R.plurals.likes_count, likeSet.likesCount, likeSet.likesCount)
 
             if (likeSet.likesCount == 0) {
                 feed_like_text.visibility = View.INVISIBLE
             } else {
-                feed_like_text.text = likeSet.likesCount.toString() + " " + quantityString
+                feed_like_text.text = quantityString
             }
 
             setCaptionText(post)

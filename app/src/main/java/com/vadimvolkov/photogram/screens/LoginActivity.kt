@@ -1,15 +1,14 @@
-package com.vadimvolkov.photogram.activities
+package com.vadimvolkov.photogram.screens
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.vadimvolkov.photogram.R
-import com.vadimvolkov.photogram.utils.coordinateBtnAndInputs
-import com.vadimvolkov.photogram.utils.showToast
+import com.vadimvolkov.photogram.screens.common.coordinateBtnAndInputs
+import com.vadimvolkov.photogram.screens.common.showToast
 import kotlinx.android.synthetic.main.activity_login.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener

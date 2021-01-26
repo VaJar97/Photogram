@@ -1,4 +1,4 @@
-package com.vadimvolkov.photogram.views
+package com.vadimvolkov.photogram.screens.common
 
 import android.app.AlertDialog
 import android.app.Dialog
