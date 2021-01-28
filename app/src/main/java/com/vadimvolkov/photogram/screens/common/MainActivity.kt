@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.bottom_navigation_view.*
 
 
 abstract class MainActivity : AppCompatActivity() {

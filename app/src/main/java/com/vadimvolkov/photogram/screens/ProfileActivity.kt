@@ -20,7 +20,7 @@ import com.vadimvolkov.photogram.screens.common.MainActivity
 import com.vadimvolkov.photogram.common.ValueEventListenerAdapter
 import com.vadimvolkov.photogram.screens.common.loadImage
 import com.vadimvolkov.photogram.screens.common.loadUserPhoto
-import com.vadimvolkov.photogram.views.setupBottomNavigation
+import com.vadimvolkov.photogram.screens.common.setupBottomNavigation
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : MainActivity() {

@@ -10,7 +10,6 @@ import com.vadimvolkov.photogram.common.toUnit
 import com.vadimvolkov.photogram.data.UsersRepository
 import com.vadimvolkov.photogram.models.User
 import com.vadimvolkov.photogram.common.task
-import com.vadimvolkov.photogram.utils.*
 import com.vadimvolkov.photogram.data.common.map
 import com.vadimvolkov.photogram.data.firebase.common.*
 import java.lang.IllegalStateException

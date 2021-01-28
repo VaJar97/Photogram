@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.vadimvolkov.photogram.R
 import com.vadimvolkov.photogram.screens.common.MainActivity
-import com.vadimvolkov.photogram.views.setupBottomNavigation
+import com.vadimvolkov.photogram.screens.common.setupBottomNavigation
 
 class SearchActivity : MainActivity() {
 

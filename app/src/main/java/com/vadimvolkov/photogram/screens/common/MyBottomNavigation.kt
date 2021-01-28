@@ -12,15 +12,18 @@ import com.vadimvolkov.photogram.screens.*
 import com.vadimvolkov.photogram.screens.common.MainActivity
 import kotlinx.android.synthetic.main.bottom_navigation_view.*
 
-class MyBottomNavigation (
-    activity: Activity,
-    private val bottomNavigationView: BottomNavigationView,
-    private val navNumber: Int): LifecycleObserver
+class MyBottomNavigation
+    (   activity: Activity,
+        private val bottomNavigationView: BottomNavigationView,
+        private val navNumber: Int
+    ): LifecycleObserver
 {
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
-            bottomNavigationView.menu.getItem(navNumber).isChecked = true
-    }
+
+    // This don't work correctly
+//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+//    fun onResume() {
+//        bottomNavigationView.menu.getItem(navNumber).isChecked = true
+//    }
 
     init {
         bottomNavigationView.setOnNavigationItemSelectedListener {
@@ -51,4 +54,5 @@ class MyBottomNavigation (
 
 fun MainActivity.setupBottomNavigation(navNumber: Int) {
     MyBottomNavigation(this, bottom_navigation_view, navNumber)
+    bottom_navigation_view.menu.getItem(navNumber).isChecked = true
 }
